@@ -73,6 +73,14 @@ sourceSets {
 task initProject << {
 	sourceSets*.java.srcDirs*.each { it.mkdirs() }
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    sourceSets*.webDir.srcDirs*.each { it.mkdirs() }
+//    def webSrc="$projectDir/src/main/webContent"
+//    file(webSrc+"webapp").mkdirs()
+//    file(webSrc+"webapp/lib").mkdirs()
+//    file(webSrc+"webapp/css").mkdirs()
+//    file(webSrc+"webapp/js").mkdirs()
+//    file(webSrc+"webapp/img").mkdirs()
+//    file(webSrc+"webapp/view").mkdirs()
 }
 
 build.dependsOn initProject

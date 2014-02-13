@@ -1,0 +1,78 @@
+apply plugin: "java"
+apply plugin: "idea"
+
+sourceCompatibility=1.7
+
+[compileJava, javadoc, compileTestJava]*.options*.encoding = 'UTF-8'
+
+defaultTasks "build"
+
+
+
+repositories {
+    mavenLocal()
+    maven { url "http://106.120.107.150:9355/nexus/content/groups/public/" }
+}
+
+configure(allprojects) { project ->
+	group = "com.daojia"
+	ext.springVersion="4.0.0.RELEASE"
+    ext.hibernateVersion="4.2.4.Final"
+    ext.log4jVersion="2.0-beta9"
+    ext.servletVersion="3.1.0"
+    ext.jettyVersion="9.1.2.v20140210"
+    ext.slf4jVersion="1.7.5"
+}
+
+dependencies{
+    //spring
+    compile("org.springframework:spring-context:${springVersion}")
+    compile("org.springframework:spring-context-support:${springVersion}")
+    compile("org.springframework:spring-tx:${springVersion}")
+    compile("org.springframework:spring-webmvc:${springVersion}")
+    compile("org.springframework:spring-orm:${springVersion}")
+    //hibernate
+    compile("org.hibernate:hibernate-core:${hibernateVersion}")
+    //slf4j
+    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+    compile("org.slf4j:slf4j-simple:${slf4jVersion}")
+    //log4j
+    compile("org.apache.logging.log4j:log4j-api:${log4jVersion}")
+    compile("org.apache.logging.log4j:log4j-core:${log4jVersion}")
+//    compile("org.apache.logging.log4j:log4j-to-slf4j:${log4jVersion}")
+
+    //servlet
+    compile("javax.servlet:javax.servlet-api:${servletVersion}")
+    //jetty
+    compile("org.eclipse.jetty:jetty-server:${jettyVersion}")
+    compile("org.eclipse.jetty:jetty-webapp:${jettyVersion}")
+    compile("org.eclipse.jetty:jetty-annotations:${jettyVersion}")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["$projectDir/src/main/java","$projectDir/src/main/webContent"]
+        }
+        resources {
+            srcDirs = ["$projectDir/src/main/resources"]
+        }
+    }
+    test {
+        java {
+            srcDirs = ["$projectDir/src/test/java"]
+        }
+        resources {
+            srcDirs = ["$projectDir/src/test/resources"]
+        }
+    }
+
+}
+
+
+task initProject << {
+	sourceSets*.java.srcDirs*.each { it.mkdirs() }
+    sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+build.dependsOn initProject

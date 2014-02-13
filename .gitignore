@@ -1,4 +1,9 @@
 *.class
+.DS_Store
+.gradle/
+.idea/
+build/
+*.iml
 
 # Package Files #
 *.jar

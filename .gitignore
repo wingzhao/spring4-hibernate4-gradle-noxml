@@ -4,8 +4,10 @@
 .idea/
 build/
 *.iml
+logs/
 
 # Package Files #
 *.jar
 *.war
 *.ear
+/bin
